@@ -29,11 +29,15 @@
     const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
     camera.position.z = 5;
 
-    const knot = new THREE.Mesh(
-      new THREE.TorusKnotGeometry(1, 0.32, 220, 32),
-      new THREE.MeshStandardMaterial({ color: 0x7c5cff, metalness: 0.6, roughness: 0.25 })
+    const cube = new THREE.Mesh(
+      new THREE.BoxGeometry(2, 2, 2),
+      new THREE.MeshStandardMaterial({ color: 0x7c5cff, metalness: 0.5, roughness: 0.3 })
     );
-    scene.add(knot);
+    cube.add(new THREE.LineSegments(
+      new THREE.EdgesGeometry(cube.geometry),
+      new THREE.LineBasicMaterial({ color: 0xffffff })
+    ));
+    scene.add(cube);
 
     scene.add(new THREE.AmbientLight(0xffffff, 0.4));
     const key = new THREE.PointLight(0x66ccff, 60, 20); key.position.set(3, 3, 4);
@@ -41,8 +45,8 @@
     scene.add(key, rim);
 
     renderer.setAnimationLoop((t) => {
-      knot.rotation.x = t * 0.0004;
-      knot.rotation.y = t * 0.0006;
+      cube.rotation.x = t * 0.0004;
+      cube.rotation.y = t * 0.0006;
       renderer.render(scene, camera);
     });
   </script>
